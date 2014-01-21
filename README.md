@@ -1,8 +1,10 @@
-# Swipe Gallery component
+# Swipe Gallery Component
+
+Simple wrapper around Swipe component (https://github.com/bradbirdsall/Swipe)
 
 ## Installation
 
-* Down load from local repo.
+* Download from local repo.
 * install depencancies
 * bower install
 
