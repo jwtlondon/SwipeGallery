@@ -1,7 +1,7 @@
 require.config({
     paths: {
-        'jquery': '/src/js/third_party/jquery/jquery',
-        'swipe': '/src/js/third_party/Swipe/swipe',
+        'jquery': 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min',
+        'swipe': 'http://cdnjs.cloudflare.com/ajax/libs/swipe/2.0/swipe.min',
         'swipeGallery': '/src/js/swipeGallery'
     },
     shim: {
