@@ -11,5 +11,10 @@
   "dependencies": {
     "express": "~3.4.7",
     "openurl": "~1.1.0"
+  },
+  "devDependencies": {
+    "gulp-util": "~2.2.12",
+    "gulp": "~3.4.0",
+    "gulp-uglify": "~0.1.0"
   }
 }

@@ -13,6 +13,14 @@ require.config({
 define(['swipeGallery'], function() {
     'use strict';
 	
-    $('.carousel').SwipeGallery();
+    $('.carousel').SwipeGallery({
+        callback:function(index, elem) {
+            console.log('slide changeing to '+this);
+        },
+        transitionEnd:function(index, elem) {
+            console.log('slide changed to '+this);
+        }
+
+    });
    
 });

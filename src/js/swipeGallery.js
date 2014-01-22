@@ -13,6 +13,24 @@
 
     function SwipeGalleryDefinition($,Swipe) {
 
+         // states
+        var states = {
+            IDLE_STATE       : 'idle',
+            AUTOPLAY_STATE   : 'autoplay'
+        },
+        defaultOptions = {
+                paginator    : true,
+                autoplay     : false,
+                autoplayDelay: 5000,
+                controls     : true,
+                swipeOptions : {
+                    speed           : 400,
+                    continuous      : true,
+                    disableScroll   : false,
+                    stopPropagation : false
+                }
+            };
+
         /**
          * Contructor
          * element - container element
@@ -30,9 +48,7 @@
         }
         SwipeGallery.fn = SwipeGallery.prototype;
 
-        // states
-        SwipeGallery.IDLE_STATE = 'idle';
-        SwipeGallery.AUTOPLAY_STATE = 'autoplay';
+       
 
         /**
          * SwipeGallery Initialisation
@@ -45,19 +61,8 @@
             this.container = this.element.children[0];
             this.slides = this.container.children;
             this.timer;
-            this.state = SwipeGallery.IDLE_STATE;
-            this.options = $.extend({
-                paginator    : true,
-                autoplay     : false,
-                autoplayDelay: 5000,
-                controls     : true,
-                swipeOptions : {
-                    speed: 400,
-                    continuous: true,
-                    disableScroll: false,
-                    stopPropagation: false
-                }
-            }, opts);
+            this.state = states.IDLE_STATE;
+            this.options = $.extend({}, defaultOptions, opts || {});
 
             this.initSwipe();
             this.buildContols();
@@ -115,9 +120,12 @@
 
                 this.$e.find('.autoplay').on('click',function (event) {
                     event.preventDefault();
-                    if (component.state == SwipeGallery.AUTOPLAY_STATE) {
+                    
+                    if (component.state == states.AUTOPLAY_STATE) {
                         component.clearTimer();
+
                     } else {
+                         
                         component.setTimer();
 
                     }
@@ -149,10 +157,11 @@
 
                 component.pageButtons.removeClass('active').eq(index).addClass('active');
 
+                component.options.callback && component.options.callback.call(this,index, elem);
             };
             this.options.swipeOptions.transitionEnd = function (index, elem) {
-            
-
+                component.options.transitionEnd && component.options.transitionEnd.call(this,index, elem);
+                
             };
 
             this.carousel = Swipe(this.element, this.options.swipeOptions);
@@ -166,7 +175,7 @@
          */
         SwipeGallery.fn.nextPrevSlide = function(btn) {
             var component = this;
-            if (component.state == SwipeGallery.AUTOPLAY_STATE) { 
+            if (component.state == states.AUTOPLAY_STATE) { 
                 component.setTimer();
             }
 
@@ -190,11 +199,11 @@
         SwipeGallery.fn.setTimer = function() {
             var component = this;
             clearTimeout(this.timer);
-            if (this.options.autoplay === true) {
+           
                 this.timer = setTimeout(function() { component.timerCallback() },this.options.autoplayDelay);
-                this.state = SwipeGallery.AUTOPLAY_STATE;
+                this.state = states.AUTOPLAY_STATE;
                 if (!this.$e.find('.autoplay').hasClass('playing')) this.$e.find('.autoplay').addClass('playing')
-            }
+           
         }
 
         /**
@@ -203,7 +212,7 @@
         SwipeGallery.fn.clearTimer = function() {
             clearTimeout(this.timer);
             this.$e.find('.autoplay').removeClass('playing');
-            this.state = SwipeGallery.IDLE_STATE;
+            this.state = states.IDLE_STATE;
         }
         
         /**
