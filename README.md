@@ -140,18 +140,8 @@ The slider requires some basic CSS scaffolding
 .carouselControl:hover {
 	opacity: 1;
 }
-.carouselControl.next {
-	right: 20px;
 
-}
-.carouselControl.prev {
-	left: 20px;
-	background-position: -400px -153px;
 
-}
-.carousel-videos .carouselControl {
-    margin-top: -1em;
-}
 ```
 ### JS
 
