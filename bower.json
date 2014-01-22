@@ -1,8 +1,8 @@
 {
-  "name": "gallery-plugin",
-  "version": "0.0.0",
+  "name": "SwipeGallery",
+  "version": "0.0.1",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "ignore": [
     "**/.*",
     "node_modules",
@@ -11,8 +11,6 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "~2.1.9",
-    "jquery": "~2.0",
     "Swipe": "~2.0.0"
   }
 }
