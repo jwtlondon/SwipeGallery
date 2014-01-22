@@ -2,7 +2,7 @@
 
 Simple wrapper around Swipe component (https://github.com/bradbirdsall/Swipe)
 
-## Requirments
+## Requirements
 
 * Swipe
 * jQuery
