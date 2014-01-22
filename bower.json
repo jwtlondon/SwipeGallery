@@ -1,6 +1,6 @@
 {
   "name": "SwipeGallery",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "private": false,
   "ignore": [
@@ -11,6 +11,7 @@
     "tests"
   ],
   "dependencies": {
-    "Swipe": "~2.0.0"
+    "Swipe": "~2.0.0",
+    "jquery": "~1.10.2"
   }
 }

@@ -2,6 +2,11 @@
 
 Simple wrapper around Swipe component (https://github.com/bradbirdsall/Swipe)
 
+## Requirments
+
+* Swipe
+* jQuery
+
 ## Installation
 
 * Download from local repo.
