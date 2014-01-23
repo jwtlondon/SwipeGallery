@@ -33,6 +33,9 @@ Complete list of configuration options and defaults:
 defaultOptions = {
                 paginator    : true, // opt add paginator
                 controls     : true, // opt add controls
+                controlsTemplate: '<nav class="controls"><button class="prev carouselControl">Previous</button><button class="autoplay carouselControl">Play/Pause</button><button class="next carouselControl">Next</button></nav>', // controls template
+                pagerTemplate: '<nav class="paging">{%forloop%}<button class="pager" data-index="{{index}}">{{index}}</button>{%endforloop%}</nav>', // pager template
+                swipeOptions : {
                 autoplay     : false, // set autoplay mode
                 autoplayDelay: 5000, // duration slide appears during autoplay
                 callback : function (index, elem) { }, // on slide change

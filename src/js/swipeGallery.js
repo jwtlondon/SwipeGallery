@@ -23,6 +23,8 @@
                 autoplay     : false,
                 autoplayDelay: 5000,
                 controls     : true,
+                controlsTemplate: '<nav class="controls"><button class="prev carouselControl">Previous</button><button class="autoplay carouselControl">Play/Pause</button><button class="next carouselControl">Next</button></nav>',
+                pagerTemplate: '<nav class="paging">{%forloop%}<button class="pager" data-index="{{index}}">{{index}}</button>{%endforloop%}</nav>',
                 swipeOptions : {
                     speed           : 400,
                     continuous      : true,
@@ -30,6 +32,11 @@
                     stopPropagation : false
                 }
             };
+
+          
+         
+
+
 
         /**
          * Contructor
@@ -48,7 +55,15 @@
         }
         SwipeGallery.fn = SwipeGallery.prototype;
 
-       
+        /**
+         * Super basic template function
+         *
+         */   
+         SwipeGallery.fn.t = function(s,d){
+           for(var p in d)
+             s=s.replace(new RegExp('{{'+p+'}}','g'), d[p]);
+           return s;
+          }
 
         /**
          * SwipeGallery Initialisation
@@ -80,31 +95,32 @@
          * Create controls html if enabled
          */
         SwipeGallery.fn.buildContols = function() {
-            var controlsHTML;
+            var component = this;
+            var controlsHTML, tmplParts, tmpl;
             controlsHTML = '';
 
             if (this.options.paginator === true) {
-                controlsHTML += '<nav class="paging">';
-                $(this.slides).each(function (listIndex, listItem) {
-                        controlsHTML += '<button class="pager" data-index="' + listIndex + '">' + listIndex + '</button>';
-                });
-                controlsHTML += '</nav>';
-            }
+                tmplParts = this.options.pagerTemplate.split('{%forloop%}');
+                controlsHTML += tmplParts[0];
+                tmplParts = tmplParts[1].split('{%endforloop%}');
+                tmpl = tmplParts[0];
 
-            var controlsBtns = [];
+                $(this.slides).each(function (listIndex, listItem) {
+                        controlsHTML += component.t(tmpl,{index:listIndex});
+                });
+                controlsHTML += tmplParts[1];
+            }
 
             if (this.options.controls === true) {
-                controlsBtns.push('<button class="prev changeSlide carouselControl">Previous</button>');
-                controlsBtns.push('<button class="autoplay carouselControl">Play/Pause</button>');
-                controlsBtns.push('<button class="next changeSlide carouselControl">Next</button>');
+                controlsHTML +=this.options.controlsTemplate
             }
 
-            if (this.options.autoplay === true || this.options.controls === true) {
-                controlsHTML += '<nav class="controls">'+controlsBtns.join('')+'</nav>';
-            }
             
             this.$e.append(controlsHTML);
         }   
+
+
+
 
         /**
          * Initalise controls if enabled
@@ -112,7 +128,7 @@
         SwipeGallery.fn.initControls = function() {
             var component = this;
             if (this.options.controls === true) {
-                this.$e.find('.changeSlide').on('click',function (event) {
+                this.$e.find('.next, .prev').on('click',function (event) {
                     event.preventDefault();
                     component.nextPrevSlide(event.target);
                     return false;
